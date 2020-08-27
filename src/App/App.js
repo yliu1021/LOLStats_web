@@ -60,7 +60,8 @@ export default function App() {
         const searchParams = new URLSearchParams();
         searchParams.append("summoner", encodeURIComponent(searchName));
         searchParams.append("num_matches", "5");
-        fetch(`http://localhost:5000/analyze?${searchParams.toString()}`)
+        const url = window.location.protocol + "//" + window.location.host + `/analyze?${searchParams.toString()}`;
+        fetch(url)
             .then(res => res.json())
             .then(res => {
                 res.currSearchName = currSearchName;
