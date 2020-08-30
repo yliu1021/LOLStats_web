@@ -9,27 +9,24 @@ const useStyles = makeStyles(theme => ({
     root: {
         padding: "8px",
     },
-    currPlayerRootWin: {
-        background: "linear-gradient(45deg, #64b5f6 0%, white 70%)",
-        padding: "8px",
-    },
-    currPlayerRootLoss: {
-        background: "linear-gradient(45deg, #e57373 0%, white 70%)",
+    currPlayer: {
+        background: props => props.background,
         padding: "8px",
     }
 }));
 
 export default function PlayerView(props) {
-    let classes = useStyles();
+    let classes = useStyles({
+        background: props.isCurrPlayer ?
+            (props.win ?
+                "linear-gradient(45deg, #64b5f6 0%, white 70%)" : "linear-gradient(45deg, #e57373 0%, white 70%)"
+            ) : null
+    });
 
     const performancePercentage = (100*props.performance).toFixed(1) + "%";
 
-    const rootClassName = props.isCurrPlayer ?
-        (props.win ? classes.currPlayerRootWin : classes.currPlayerRootLoss) :
-        classes.root;
-
     return (
-        <div className={rootClassName}>
+        <div className={classes.currPlayer}>
             <Grid container spacing={2}>
                 <Grid item xs={4} sm={4}>
                     <Typography variant={"body1"}>{props.summoner}</Typography>
